@@ -1,0 +1,232 @@
+<div class="tool-container">
+  <!-- Header Section -->
+  <div class="tool-header">
+    <div class="header-content">
+      <h1 class="tool-title">
+        <i class="bi bi-calculator"></i>
+        Math Buzz
+      </h1>
+      <p class="tool-description">Test your math skills with quick addition problems! Say Correct or Wrong as fast as you can!</p>
+      <div class="feature-badges">
+        <span class="badge">
+          <i class="bi bi-lightning"></i>
+          Quick Response
+        </span>
+        <span class="badge">
+          <i class="bi bi-graph-up"></i>
+          Progressive Difficulty
+        </span>
+        <span class="badge">
+          <i class="bi bi-keyboard"></i>
+          Keyboard Support
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="tool-content">
+    <!-- Game Stats Section -->
+    <div class="stats-section">
+      <div class="stats-card">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="bi bi-trophy"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" [style.color]="getScoreColor()">{{ score }}</div>
+            <div class="stat-label">Score</div>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="bi bi-star"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" [style.color]="getDifficultyColor()">{{ difficultyLevel }}</div>
+            <div class="stat-label">Level</div>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="bi bi-clock"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" [style.color]="getTimeColor()">{{ getTimeRemaining() | number: '1.1-1' }}s</div>
+            <div class="stat-label">Time Left</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Mode Toggle -->
+    <div class="preview-toggle-section">
+      <button 
+        class="btn btn-outline-primary" 
+        (click)="togglePreviewMode()"
+        [class.active]="previewMode">
+        <i class="bi bi-eye"></i>
+        {{ previewMode ? 'Exit Preview' : 'Preview Mode' }}
+      </button>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-section" *ngIf="showPreview && previewMode">
+      <div class="preview-card">
+        <div class="preview-header">
+          <h3 class="preview-title">
+            <i class="bi bi-eye"></i>
+            Question Preview
+          </h3>
+        </div>
+        
+        <div class="preview-content">
+          <div class="question-preview">
+            <div class="question-text">{{ previewQuestion }}</div>
+            <div class="question-answer" [class.correct]="previewAnswer" [class.incorrect]="!previewAnswer">
+              {{ previewAnswer ? 'Correct' : 'Incorrect' }}
+            </div>
+            <div class="question-explanation">{{ previewExplanation }}</div>
+          </div>
+          
+          <div class="preview-actions">
+            <button class="btn btn-primary" (click)="generatePreviewQuestion()">
+              <i class="bi bi-arrow-clockwise"></i>
+              New Preview
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Section -->
+    <div class="game-section" *ngIf="!previewMode">
+      <!-- Question Display -->
+      <div class="question-section">
+        <div class="question-container">
+          <div class="question-text">{{ questionString }}</div>
+          <div class="progress-section" *ngIf="!showScoreResult">
+            <div class="progress-container">
+              <div class="progress-bar">
+                <div 
+                  class="progress-fill" 
+                  [style.width.%]="progress"
+                  [style.background-color]="getTimeColor()">
+                </div>
+              </div>
+              <div class="progress-text">
+                {{ progress | number: '1.0-0' }}% - {{ getTimeRemaining() | number: '1.1-1' }}s remaining
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+
+
+      <!-- Action Buttons -->
+      <div class="action-section" *ngIf="!showScoreResult">
+        <div class="action-buttons">
+          <button 
+            type="button" 
+            (click)="wrongClick()" 
+            class="btn btn-danger action-btn">
+            <i class="bi bi-x-circle"></i>
+            Wrong
+          </button>
+          <button 
+            type="button" 
+            (click)="corretClick()" 
+            class="btn btn-success action-btn">
+            <i class="bi bi-check-circle"></i>
+            Correct
+          </button>
+        </div>
+        
+        <div class="keyboard-hint">
+          <i class="bi bi-keyboard"></i>
+          Use Arrow keys: ← Wrong, → Correct
+        </div>
+      </div>
+
+      <!-- Score Result -->
+      <div class="result-section" *ngIf="showScoreResult">
+        <div class="result-card">
+          <div class="result-header">
+            <h3 class="result-title">
+              <i class="bi bi-trophy"></i>
+              Game Over!
+            </h3>
+          </div>
+          
+          <div class="result-content">
+            <div class="result-message">{{ timeOut }}</div>
+            <div class="score-display">
+              <div class="score-value" [style.color]="getScoreColor()">{{ score }}</div>
+              <div class="score-label">Final Score</div>
+            </div>
+            
+            <div class="score-message">{{ getScoreMessage() }}</div>
+            
+            <div class="level-progress" *ngIf="score > 0">
+              <div class="progress-label">Progress to Next Level</div>
+              <div class="progress-bar">
+                <div 
+                  class="progress-fill" 
+                  [style.width.%]="getProgressToNextLevel()"
+                  [style.background-color]="getDifficultyColor()">
+                </div>
+              </div>
+              <div class="progress-text">
+                {{ score }} / {{ getNextLevelScore() }}
+              </div>
+            </div>
+            
+            <div class="motivational-message">{{ getMotivationalMessage() }}</div>
+          </div>
+          
+          <div class="result-actions">
+            <button 
+              type="button" 
+              (click)="generateEquationFirstTime()" 
+              class="btn btn-primary btn-lg">
+              <i class="bi bi-play-circle"></i>
+              Play Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Info Section -->
+    <div class="info-section">
+      <div class="info-card">
+        <h4 class="info-title">
+          <i class="bi bi-info-circle"></i>
+          How to Play
+        </h4>
+        <div class="info-content">
+          <div class="info-item">
+            <i class="bi bi-1-circle"></i>
+            <span>Look at the math equation above</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-2-circle"></i>
+            <span>Quickly decide if it's correct or wrong</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-3-circle"></i>
+            <span>Click the button or use arrow keys</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-4-circle"></i>
+            <span>Answer as many as you can before time runs out!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

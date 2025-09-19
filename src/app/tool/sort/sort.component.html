@@ -1,0 +1,208 @@
+<div class="tool-container">
+  <!-- Header Section -->
+  <div class="tool-header">
+    <div class="header-content">
+      <h1 class="tool-title">
+        <i class="bi bi-sort-alpha-down"></i>
+        Text Sorter
+      </h1>
+      <p class="tool-description">Sort your text data with multiple sorting options and real-time preview</p>
+      <div class="feature-badges">
+        <span class="badge">
+          <i class="bi bi-lightning"></i>
+          Real-time Preview
+        </span>
+        <span class="badge">
+          <i class="bi bi-gear"></i>
+          Multiple Options
+        </span>
+        <span class="badge">
+          <i class="bi bi-clipboard"></i>
+          Easy Copy
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="tool-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="input-card">
+        <h3 class="input-title">
+          <i class="bi bi-pencil-square"></i>
+          Input Text
+        </h3>
+        
+        <div class="input-group">
+          <label for="inputText" class="input-label">
+            <i class="bi bi-list-ul"></i>
+            Enter items to sort (one per line)
+          </label>
+          <textarea 
+            id="inputText"
+            [(ngModel)]="inputText"
+            (input)="onInputChange()"
+            class="form-control text-input" 
+            rows="8" 
+            placeholder="Enter your items here, one per line...&#10;Example:&#10;Apple&#10;Banana&#10;Cherry&#10;Date">
+          </textarea>
+          <div class="input-help">Enter each item on a new line for sorting</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Options Section -->
+    <div class="options-section">
+      <div class="options-card">
+        <h3 class="options-title">
+          <i class="bi bi-sliders"></i>
+          Sorting Options
+        </h3>
+        
+        <div class="options-grid">
+          <!-- Sort Type -->
+          <div class="option-group">
+            <label class="option-label">Sort Type</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input 
+                  type="radio" 
+                  id="alphabetical" 
+                  name="sortType" 
+                  value="alphabetical"
+                  [(ngModel)]="sortType"
+                  (change)="onSortOptionsChange()">
+                <label for="alphabetical">Alphabetical</label>
+              </div>
+              <div class="radio-item">
+                <input 
+                  type="radio" 
+                  id="numerical" 
+                  name="sortType" 
+                  value="numerical"
+                  [(ngModel)]="sortType"
+                  (change)="onSortOptionsChange()">
+                <label for="numerical">Numerical</label>
+              </div>
+              <div class="radio-item">
+                <input 
+                  type="radio" 
+                  id="length" 
+                  name="sortType" 
+                  value="length"
+                  [(ngModel)]="sortType"
+                  (change)="onSortOptionsChange()">
+                <label for="length">By Length</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sort Order -->
+          <div class="option-group">
+            <label class="option-label">Sort Order</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input 
+                  type="radio" 
+                  id="asc" 
+                  name="sortOrder" 
+                  value="asc"
+                  [(ngModel)]="sortOrder"
+                  (change)="onSortOptionsChange()">
+                <label for="asc">Ascending (A-Z)</label>
+              </div>
+              <div class="radio-item">
+                <input 
+                  type="radio" 
+                  id="desc" 
+                  name="sortOrder" 
+                  value="desc"
+                  [(ngModel)]="sortOrder"
+                  (change)="onSortOptionsChange()">
+                <label for="desc">Descending (Z-A)</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Options -->
+          <div class="option-group">
+            <label class="option-label">Additional Options</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input 
+                  type="checkbox" 
+                  id="caseSensitive"
+                  [(ngModel)]="caseSensitive"
+                  (change)="onSortOptionsChange()">
+                <label for="caseSensitive">Case Sensitive</label>
+              </div>
+              <div class="checkbox-item">
+                <input 
+                  type="checkbox" 
+                  id="removeDuplicates"
+                  [(ngModel)]="removeDuplicates"
+                  (change)="onSortOptionsChange()">
+                <label for="removeDuplicates">Remove Duplicates</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-section" *ngIf="showPreview">
+      <div class="preview-card">
+        <div class="preview-header">
+          <h3 class="preview-title">
+            <i class="bi bi-eye"></i>
+            Sorted Results
+          </h3>
+          <div class="preview-actions">
+            <button class="btn btn-outline-primary btn-sm" (click)="copyResult()">
+              <i class="bi bi-clipboard"></i>
+              Copy
+            </button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="clearAll()">
+              <i class="bi bi-trash"></i>
+              Clear
+            </button>
+          </div>
+        </div>
+        
+        <div class="preview-content">
+          <div class="result-stats">
+            <span class="stat-item">
+              <i class="bi bi-list-ul"></i>
+              {{ getItemCount() }} items
+            </span>
+            <span class="stat-item">
+              <i class="bi bi-sort-{{ getSortIcon() }}"></i>
+              {{ getSortDescription() }}
+            </span>
+          </div>
+          
+          <div class="result-output">
+            <textarea 
+              class="form-control result-textarea" 
+              rows="8" 
+              [value]="sortedResult"
+              readonly
+              placeholder="Sorted results will appear here...">
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!showPreview && !inputText.trim()">
+      <div class="empty-content">
+        <i class="bi bi-sort-alpha-down empty-icon"></i>
+        <h4>Ready to Sort!</h4>
+        <p>Enter your text items above to see the sorted results in real-time.</p>
+      </div>
+    </div>
+  </div>
+</div>

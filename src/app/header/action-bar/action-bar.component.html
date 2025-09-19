@@ -1,0 +1,61 @@
+
+<nav class="modern-navbar">
+  <div class="navbar-container">
+    <!-- Action Button -->
+    <button class="menu-toggle-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidePanel" aria-controls="sidePanel">
+      <i class="bi bi-list"></i>
+      <span class="d-none d-md-inline">Menu</span>
+    </button>
+
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+      <i class="bi bi-gear-fill brand-icon"></i>
+      <span class="brand-text">maTools</span>
+    </a>
+
+    <!-- Right side actions -->
+    <div class="navbar-actions">
+      <!-- Future actions can be added here -->
+    </div>
+  </div>
+</nav>
+
+  <!-- Side Panel (Offcanvas) -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="sidePanel" aria-labelledby="sidePanelLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sidePanelLabel">maTools</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+      <a href="/compare-list" class="list-group-item list-group-item-action">
+        <i class="bi bi-arrow-left-right"></i> List Compare
+      </a>
+      <a href="/word-count" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-text-paragraph"></i> Word Count
+      </a>
+      <a href="/generate-uuid" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-hash"></i> Generate UUID
+      </a>
+      <a href="/generate-qr-code" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-qr-code"></i> Generate QR-Code
+      </a>
+      <a href="/generate-rent-receipt" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-receipt"></i> Generator Rent Receipt
+      </a>
+      <a href="/emi-calculator" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-calculator"></i> EMI Calculator
+      </a>
+      <a href="/math-buzz" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-123"></i> MathBuzz
+      </a>
+      <a href="/json-viewer" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-file-code"></i> JSON Viewer
+      </a>
+      <a href="/sort" routerLinkActive="selected"  class="list-group-item list-group-item-action">
+        <i class="bi bi-sort-alpha-down"></i> Sort
+      </a>
+
+      <button class="mt-4 btn btn-secondary" data-bs-dismiss="offcanvas">Close</button>
+    </div>
+  </div>

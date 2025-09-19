@@ -1,0 +1,183 @@
+
+<div class="tool-container">
+  <!-- Main Content -->
+  <div class="tool-content">
+    <!-- Single UUID Section -->
+    <div class="uuid-section">
+      <div class="uuid-card">
+        <div class="uuid-header">
+          <h3 class="uuid-title">
+            <i class="bi bi-hash"></i>
+            Single UUID Generation
+          </h3>
+          <div class="uuid-actions">
+            <button class="btn btn-outline-primary btn-sm" (click)="generateNewTopUUID()">
+              <i class="bi bi-arrow-clockwise"></i>
+              Generate New
+            </button>
+          </div>
+        </div>
+        
+        <div class="uuid-content">
+          <div class="uuid-display">
+            <div class="uuid-text">{{ inputUUIDData?.topUUID }}</div>
+            <div class="uuid-actions-inline">
+              <button 
+                class="btn btn-primary" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="top" 
+                title="Copy to clipboard"
+                (click)="copyToClipboard(inputUUIDData!.topUUID)">
+                <i class="bi bi-clipboard"></i>
+                Copy
+              </button>
+              @if (copiedMessage) {
+                <div class="success-message">
+                  <i class="bi bi-check-circle"></i>
+                  {{ copiedMessage }}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulk UUID Section -->
+    <div class="bulk-section">
+      <div class="bulk-card">
+        <div class="bulk-header">
+          <h3 class="bulk-title">
+            <i class="bi bi-list-ul"></i>
+            Bulk UUID Generation
+          </h3>
+        </div>
+        
+        <div class="bulk-content">
+          <div class="input-group">
+            <label for="numberInput" class="input-label">
+              <i class="bi bi-123"></i>
+              How many UUIDs to generate?
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="number" 
+                class="form-control number-input" 
+                id="numberInput" 
+                placeholder="Enter number (1-1000)" 
+                [(ngModel)]="positiveNumber" 
+                (input)="validatePositiveNumber($event)" 
+                (keypress)="allowOnlyNumbers($event)"
+                min="1"
+                max="1000">
+              <button class="btn btn-primary generate-btn" (click)="generateBulkUUID()">
+                <i class="bi bi-arrow-right-circle-fill"></i>
+                Generate
+              </button>
+            </div>
+            <div class="input-help">Enter a number between 1 and 1000</div>
+          </div>
+
+          @if (resultList) {
+            <div class="result-section">
+              <div class="result-header">
+                <h4 class="result-title">
+                  <i class="bi bi-check-circle"></i>
+                  Generated {{inputUUIDData?.title}} UUIDs
+                </h4>
+                <div class="result-actions">
+                  <button 
+                    class="btn btn-outline-primary btn-sm"
+                    (click)="copyToClipboard(resultList, true)">
+                    <i class="bi bi-clipboard"></i>
+                    Copy All
+                  </button>
+                  @if (bulkUUIDcopiedMessage) {
+                    <div class="success-message">
+                      <i class="bi bi-check-circle"></i>
+                      {{ bulkUUIDcopiedMessage }}
+                    </div>
+                  }
+                </div>
+              </div>
+              
+              <div class="result-content">
+                <div class="result-stats">
+                  <span class="stat-item">
+                    <i class="bi bi-hash"></i>
+                    {{ getUuidCount() }} UUIDs generated
+                  </span>
+                  <span class="stat-item">
+                    <i class="bi bi-file-text"></i>
+                    {{ getCharacterCount() }} characters
+                  </span>
+                </div>
+                
+                <div class="result-output">
+                  <textarea 
+                    class="form-control result-textarea" 
+                    rows="12" 
+                    [(ngModel)]="resultList"
+                    placeholder="Generated UUIDs will appear here..."
+                    readonly>
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="info-section">
+      <div class="info-card">
+        <h4 class="info-title">
+          <i class="bi bi-info-circle"></i>
+          About {{inputUUIDData?.title}} UUIDs
+        </h4>
+        <div class="info-content">
+          <div class="info-item">
+            <i class="bi bi-1-circle"></i>
+            <span><strong>Version:</strong> {{inputUUIDData?.title}}</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-shield-check"></i>
+            <span><strong>Security:</strong> Cryptographically secure random generation</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-globe"></i>
+            <span><strong>Standard:</strong> RFC 4122 compliant</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-lightning"></i>
+            <span><strong>Speed:</strong> Instant generation and copying</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer Section -->
+    <div class="disclaimer-section">
+      <div class="disclaimer-card">
+        <h4 class="disclaimer-title">
+          <i class="bi bi-exclamation-triangle"></i>
+          Important Disclaimer
+        </h4>
+        <div class="disclaimer-content">
+          <p>
+            While our tool is designed to generate UUIDs (Universally Unique Identifiers) online for free, we 
+            <strong>do not guarantee</strong> the uniqueness of the generated UUIDs. The process relies on standard 
+            algorithms for UUID generation, which typically produce unique identifiers, but there is a 
+            <strong>small chance of collision</strong> (duplicate UUIDs).
+          </p>
+          <p>
+            We strongly recommend that you <strong>verify the uniqueness</strong> of each generated UUID on your 
+            end before using it in critical systems or applications. The responsibility for ensuring the uniqueness 
+            of UUIDs rests with the user.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

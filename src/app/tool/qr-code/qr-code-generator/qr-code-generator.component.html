@@ -1,0 +1,66 @@
+<div class="container mt-2">
+    <h3 class="text-center">Generate QR Code</h3>
+    <div class="row ">
+      <div class="row col-md-10 text-start mt-4 mx-auto "> 
+        <div class="mb-3">
+            <label for="inputString" class="form-label">Enter Text to Generate QR-Code</label>
+            <input type="text" [(ngModel)]="inputText" class="form-control" id="inputString" placeholder="Add Text here to Generate QR Code">
+        </div>
+        <div class="mt-1 row align-items-left">
+            <div class="col-auto">
+              <label for="inlineInput" class="col-form-label">Size:</label>
+            </div>
+            <div class="col-auto">
+              <input type="number" [(ngModel)]="width" class="form-control" id="inlineInput" placeholder="QR Code size">
+            </div>
+
+            <div class="mt-1 d-flex align-items-center">
+              <label for="colorPicker" class="me-2">Dark Color:</label>
+              <input type="color" [(ngModel)]="colorDark" class="form-control form-control-color" id="colorPicker" value="#563d7c" title="Choose your color">
+            </div>
+
+            <div class="mt-1 d-flex align-items-center">
+              <label for="colorPicker" class="me-2">Light Color:</label>
+              <input type="color" [(ngModel)]="colorLight" class="form-control form-control-color" id="colorPicker" value="#563d7c" title="Choose your color">
+            </div>
+
+            
+
+
+
+          </div>
+      </div>
+    </div>
+
+    @if (inputText) {
+        <div class="row ">
+            <div  id="qrCodeContainer" class="row col-md-12 qr-code-preview text-center mt-4 mx-auto "> 
+                <qrcode [qrdata]="inputText" [width]="width" 
+                [colorDark]="colorDark"
+                [colorLight]="colorLight"  
+                [errorCorrectionLevel]="'M'"></qrcode>
+                <p>Generated from <a href="https://matools.org/generate-qr-code">https://matools.org</a> </p>
+            </div>
+            <div class="row col-md-2 text-center mt-4 mx-auto "> 
+              <button class="btn btn-primary" (click)="saveAsPng()">Download</button> 
+            </div>
+        </div>
+
+        <div class="alert alert-info mt-3" role="alert">
+        <strong>Disclaimer:</strong>
+        <p>
+            This QR code generator is a client-side tool. All data you input is processed locally on your device, 
+            ensuring your privacy and data security. We do not store or share any of the content you generate.
+        </p>
+        <p>
+            However, we may collect anonymized usage data for analytics purposes to improve user experience. 
+            By using this tool, you agree to these terms.
+        </p>
+        </div>
+    }
+
+
+</div>
+
+
+

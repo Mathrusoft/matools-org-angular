@@ -1,0 +1,26 @@
+.qr-code-preview {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    border: 2px solid #006224;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .qrCodeItem {
+    border: 2px solid #006224;
+  }
+
+  .qrImage {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    object-fit: contain;
+  }
+
+  .qrTitle {
+    font-size: 30px;
+    text-align: center;
+    color: #006224; /* Dark gray for title */
+    font-weight: bold;
+  }
+  

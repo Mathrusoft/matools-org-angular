@@ -1,0 +1,165 @@
+<div class="container mt-4">
+  <h3 class="text-center">Rent Receipt Generator</h3>
+  <form #rentForm="ngForm" (ngSubmit)="generateReceipt()">
+    <div class="row g-3">
+      <!-- Employee Name -->
+      <div class="col-md-6">
+        <label for="employeeName" class="form-label">Employee Name</label>
+        <input
+          type="text"
+          id="employeeName"
+          class="form-control"
+          [(ngModel)]="employeeName"
+          name="employeeName"
+          required
+        />
+      </div>
+      <!-- Employee ID -->
+      <div class="col-md-6">
+        <label for="employeeId" class="form-label">Employee ID</label>
+        <input
+          type="text"
+          id="employeeId"
+          class="form-control"
+          [(ngModel)]="employeeId"
+          name="employeeId"
+          required
+        />
+      </div>
+      <!-- House Address -->
+      <div class="col-md-6">
+        <label for="houseAddress" class="form-label">House Address</label>
+        <textarea
+          id="houseAddress"
+          class="form-control"
+          [(ngModel)]="houseAddress"
+          name="houseAddress"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <!-- Rent Amount -->
+      <div class="col-md-6">
+        <label for="rentAmount" class="form-label">Rent Amount (INR)</label>
+        <input
+          type="number"
+          id="rentAmount"
+          class="form-control"
+          [(ngModel)]="rentAmount"
+          name="rentAmount"
+          required
+        />
+      </div>
+      <!-- House Owner Name -->
+      <div class="col-md-6">
+        <label for="houseOwnerName" class="form-label">House Owner Name</label>
+        <input
+          type="text"
+          id="houseOwnerName"
+          class="form-control"
+          [(ngModel)]="houseOwnerName"
+          name="houseOwnerName"
+          required
+        />
+      </div>
+      <!-- House Owner PAN -->
+      <div class="col-md-6">
+        <label for="houseOwnerPan" class="form-label">House Owner PAN</label>
+        <input
+          type="text"
+          id="houseOwnerPan"
+          class="form-control"
+          [(ngModel)]="houseOwnerPan"
+          name="houseOwnerPan"
+          required
+        />
+      </div>
+      <!-- From Date -->
+      <div class="col-md-3">
+        <label for="fromDate" class="form-label">From Date</label>
+        <input
+          type="date"
+          id="fromDate"
+          class="form-control"
+          [(ngModel)]="fromDate"
+          name="fromDate"
+          required
+        />
+      </div>
+      <!-- To Date -->
+      <div class="col-md-3">
+        <label for="toDate" class="form-label">To Date</label>
+        <input
+          type="date"
+          id="toDate"
+          class="form-control"
+          [(ngModel)]="toDate"
+          name="toDate"
+          required
+        />
+      </div>
+    </div>
+    <br/>
+    <p>For Better PDF design , Use Device with bigger screen. Like Laptop/PC</p>
+    <button type="submit" class="btn btn-primary mt-4">Generate Receipt</button>
+  </form>
+  @if (error) {
+    <p>{{error}}</p>
+  }
+
+  <br/>
+  <br/>
+
+  <div class="container pr-5 pl-5"  id="rentReceipt">
+    <div *ngFor="let item of result; let i = index;">
+      <div class="container-fluid rent-receipt" style="border:1px solid black;">
+        <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <h3>RENT RECIPT</h3>
+            <h6>Generated on matools.org</h6>
+          </div>
+          <div class="col-md-4">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b><h4>{{item.month}}</h4></b>
+          </div>
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <p>Receipt No. {{i+1}}</p>
+            <p>Date: {{item.receiptDate}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="width: 500px;">
+            <p>
+              Received sum of INR Rs. <b>{{rentAmount}}</b> from <b>{{employeeName}}</b> towards the rent of property located at <b>{{houseAddress}}</b> for the period from <b>{{item.startDate}}</b> to <b>{{item.endDate}}</b>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p>
+              <b>{{houseOwnerName}}</b> (Landlord) 
+            </p>
+            <p>Pan: <b>{{houseOwnerPan}}</b></p>
+          </div>
+        </div>
+      </div>
+
+      <br/>
+      <br/>
+
+    </div>
+  </div>
+
+  @if (result.length > 0) {
+    <button (click)="downloadPDF()" class="btn btn-primary mt-4">Download</button>
+  }
+
+
+</div>

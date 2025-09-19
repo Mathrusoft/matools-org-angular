@@ -1,0 +1,331 @@
+<div class="tool-container">
+  <div class="tool-header">
+    <h1 class="tool-title">
+      <i class="bi bi-file-word"></i>
+      Word Count Tool
+    </h1>
+    <p class="tool-description">Analyze and count words in your text with advanced options</p>
+  </div>
+
+  <div class="tool-content">
+    <div class="input-section">
+      <div class="input-group">
+        <label for="textInput" class="input-label">Enter your text:</label>
+        <textarea 
+          id="textInput" 
+          class="form-control text-input" 
+          rows="8" 
+          [(ngModel)]="listA" 
+          placeholder="Enter your text here... (one word per line or separated by spaces/commas)">
+        </textarea>
+      </div>
+    </div>
+
+    <div class="options-section">
+      <h4 class="options-title">Processing Options</h4>
+      <div class="options-grid">
+        <div class="option-item">
+          <input class="form-check-input" type="checkbox" (change)="onCompareClick()" [(ngModel)]="checkboxSplitBySpace" id="splitSpace">
+          <label class="form-check-label" for="splitSpace">{{labelSplitBySpace}}</label>
+        </div>
+        <div class="option-item">
+          <input class="form-check-input" type="checkbox" (change)="onCompareClick()" [(ngModel)]="checkboxSplitByComma" id="splitComma">
+          <label class="form-check-label" for="splitComma">Split words by <strong>, (Comma)</strong></label>
+        </div>
+        <div class="option-item">
+          <input class="form-check-input" type="checkbox" (change)="onCompareClick()" [(ngModel)]="chekboxCaseInSensitive" id="caseInsensitive">
+          <label class="form-check-label" for="caseInsensitive">{{labelCaseInSensitive}}</label>
+        </div>
+        <div class="option-item">
+          <input class="form-check-input" type="checkbox" (change)="onCompareClick()" [(ngModel)]="checkboxRemoveDuplicate" id="removeDuplicates">
+          <label class="form-check-label" for="removeDuplicates">{{labelRemoveDuplicate}}</label>
+        </div>
+        <div class="option-item">
+          <input class="form-check-input" type="checkbox" (change)="onCompareClick()" [(ngModel)]="checkboxSort" id="sort">
+          <label class="form-check-label" for="sort">{{labelSort}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-section">
+      <button class="btn btn-primary btn-lg process-btn" (click)="onCompareClick()">
+        <i class="bi bi-calculator"></i>
+        <span>Count Words</span>
+      </button>
+    </div>
+    <div [hidden]="isResultFound" class="result-section">
+      <div class="result-header">
+        <h3 class="result-title">
+          <i class="bi bi-graph-up"></i>
+          Word Count Results
+        </h3>
+      </div>
+      <div class="result-content">
+        <div class="result-textarea">
+          <label for="resultOutput" class="result-label">Analysis Results:</label>
+          <textarea 
+            id="resultOutput" 
+            class="form-control result-output" 
+            rows="8" 
+            [(ngModel)]="result"
+            readonly>
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+<!-- Accordion Help Section -->
+<div class="accordion-container">
+  <div class="accordion" id="accordionHelp">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseOne"
+          type="button" 
+          (click)="toggleAccordion('collapseOne')"
+          [attr.aria-expanded]="accordionStates.collapseOne"
+          aria-controls="collapseOne">
+          How Tool works
+        </button>
+      </h2>
+      <div 
+        id="collapseOne" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseOne"
+        [class.show]="accordionStates.collapseOne"
+        aria-labelledby="headingOne">
+        <div class="accordion-body">
+
+      <h3>Input Data</h3>
+      <p><strong>ListA:</strong> <code>["Apple", "apple", "banana", "mango", "grapes", "apple", "pineapple", "banana"]</code></p>
+
+      <h3>Word Count (Case Sensitive)</h3>
+      <p>This is the count of each unique word in <strong>ListA</strong>, considering case sensitivity</p>
+      <h3>Result</h3>
+      <ul>
+          <li><strong>Apple:</strong> 1</li>
+          <li><strong>apple:</strong> 2</li>
+          <li><strong>banana:</strong> 2</li>
+          <li><strong>mango:</strong> 1</li>
+          <li><strong>grapes:</strong> 1</li>
+          <li><strong>pineapple:</strong> 1</li>
+          <li><strong>Pineapple:</strong> 1</li>
+          <li><strong>Grapes:</strong> 1</li>
+      </ul>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseTwo"
+          type="button" 
+          (click)="toggleAccordion('collapseTwo')"
+          [attr.aria-expanded]="accordionStates.collapseTwo"
+          aria-controls="collapseTwo">
+          How {{labelSplitBySpace}} works
+        </button>
+      </h2>
+      <div 
+        id="collapseTwo" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseTwo"
+        [class.show]="accordionStates.collapseTwo"
+        aria-labelledby="headingTwo">
+        <div class="accordion-body">
+
+      <h3>Input Data</h3>
+      <p><strong>ListA:</strong> <code> Apple apple banana mango grapes apple pineapple banana mango Pineapple Grapes mango</code></p>
+      
+      <h3>Word Count (Case Sensitive)</h3>
+      <p>This is the count of each unique word in <strong>ListA</strong>, split by <code>" " (space)</code></p>
+      <h3>Result</h3>
+      <ul>
+          <li><strong>Apple:</strong> 1</li>
+          <li><strong>apple:</strong> 2</li>
+          <li><strong>banana:</strong> 2</li>
+          <li><strong>mango:</strong> 3</li>
+          <li><strong>grapes:</strong> 1</li>
+          <li><strong>pineapple:</strong> 1</li>
+          <li><strong>Pineapple:</strong> 1</li>
+          <li><strong>Grapes:</strong> 1</li>
+      </ul>
+      
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseThree"
+          type="button" 
+          (click)="toggleAccordion('collapseThree')"
+          [attr.aria-expanded]="accordionStates.collapseThree"
+          aria-controls="collapseThree">
+          How Split words by <span> <code> `,` (Comma) </code> </span> works
+        </button>
+      </h2>
+      <div 
+        id="collapseThree" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseThree"
+        [class.show]="accordionStates.collapseThree"
+        aria-labelledby="headingThree">
+        <div class="accordion-body">
+
+      <h3>Input Data</h3>
+      <p><strong>ListA:</strong> <code> Apple, apple,banana, mango,grapes, apple,pineapple, banana, mango, Pineapple, Grapes, mango</code></p>
+
+      <h3>Word Count (Case Sensitive)</h3>
+      <p>This is the count of each unique word in <strong>ListA</strong>, split by commas (`,`), and considering case sensitivity.</p>
+      <h3>Result</h3>
+      <ul>
+          <li><strong>Apple:</strong> 1</li>
+          <li><strong>apple:</strong> 2</li>
+          <li><strong>banana:</strong> 2</li>
+          <li><strong>mango:</strong> 3</li>
+          <li><strong>grapes:</strong> 1</li>
+          <li><strong>pineapple:</strong> 1</li>
+          <li><strong>Pineapple:</strong> 1</li>
+          <li><strong>Grapes:</strong> 1</li>
+      </ul>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseFour"
+          type="button" 
+          (click)="toggleAccordion('collapseFour')"
+          [attr.aria-expanded]="accordionStates.collapseFour"
+          aria-controls="collapseFour">
+          How Ignore Case (Convert to Lower case) works
+        </button>
+      </h2>
+      <div 
+        id="collapseFour" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseFour"
+        [class.show]="accordionStates.collapseFour"
+        aria-labelledby="headingFour">
+        <div class="accordion-body">
+
+      <h3>Input Data</h3>
+      <p><strong>ListA: </strong> <code>["Apple", "apple", "banana", "mango", "grapes", "apple", "pineapple", "banana"]</code></p>
+
+      <h3>Word Count Ignore Case (Convert to Lower case)</h3>
+      <p>This is the count of each unique word in <strong>ListA</strong>, split by new lines and ignoring case.</p>
+      <h3>Result</h3>
+      <ul>
+          <li><strong>apple:</strong> 3</li>
+          <li><strong>banana:</strong> 2</li>
+          <li><strong>mango:</strong> 1</li>
+          <li><strong>grapes:</strong> 1</li>
+          <li><strong>pineapple:</strong> 1</li>
+      </ul>
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFive">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseFive"
+          type="button" 
+          (click)="toggleAccordion('collapseFive')"
+          [attr.aria-expanded]="accordionStates.collapseFive"
+          aria-controls="collapseFive">
+          How {{labelRemoveDuplicate}} works
+        </button>
+      </h2>
+      <div 
+        id="collapseFive" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseFive"
+        [class.show]="accordionStates.collapseFive"
+        aria-labelledby="headingFive">
+        <div class="accordion-body">
+      <h3>Input Data</h3>
+      <p><strong>ListA: </strong> <code>["Apple", "apple", "banana", "mango", "grapes", "apple", "pineapple", "banana"]</code></p>
+      
+      <h3>Result (Remove Duplicates - Case Sensitive)</h3>
+      <p>This is the unique list of words from <strong>ListA</strong>, retaining their original cases and removing duplicates.</p>
+      <h3>Result</h3>
+      <ul>
+          <li>Apple</li>
+          <li>apple</li>
+          <li>banana</li>
+          <li>mango</li>
+          <li>grapes</li>
+          <li>pineapple</li>
+      </ul>
+      
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingSix">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseSix"
+          type="button" 
+          (click)="toggleAccordion('collapseSix')"
+          [attr.aria-expanded]="accordionStates.collapseSix"
+          aria-controls="collapseSix">
+          How {{labelSort}} works
+        </button>
+      </h2>
+      <div 
+        id="collapseSix" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseSix"
+        [class.show]="accordionStates.collapseSix"
+        aria-labelledby="headingSix">
+        <div class="accordion-body">
+      <h3>Input Data</h3>
+      <p><strong>ListA: </strong> <code>["Apple", "apple", "banana", "mango", "grapes", "apple", "pineapple", "banana"]</code></p>
+
+      <h3>Word Count (Case Sensitive and Sorted)</h3>
+      <p>This is the count of each unique word in <strong>ListA</strong>, considering case sensitivity and sorting the result alphabetically.</p>
+      <h3>Result</h3>
+      <ul>
+          <li><strong>Apple:</strong> 1</li>
+          <li><strong>Grapes:</strong> 1</li>
+          <li><strong>Pineapple:</strong> 1</li>
+          <li><strong>apple:</strong> 2</li>
+          <li><strong>banana:</strong> 2</li>
+          <li><strong>grapes:</strong> 1</li>
+          <li><strong>mango:</strong> 3</li>
+          <li><strong>pineapple:</strong> 1</li>
+      </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

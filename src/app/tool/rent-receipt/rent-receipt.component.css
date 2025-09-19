@@ -1,0 +1,19 @@
+.container {
+  max-width: 800px;
+}
+
+.border {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.text-center {
+  text-align: center;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,341 @@
+<div class="tool-container">
+  <!-- Header Section -->
+  <div class="tool-header">
+    <div class="header-content">
+      <h1 class="tool-title">
+        <i class="bi bi-calculator"></i>
+        EMI Calculator
+      </h1>
+      <p class="tool-description">Calculate your Equated Monthly Installment (EMI) for loans with detailed breakdown</p>
+      <div class="feature-badges">
+        <span class="badge">
+          <i class="bi bi-shield-check"></i>
+          Secure Calculation
+        </span>
+        <span class="badge">
+          <i class="bi bi-lightning"></i>
+          Instant Results
+        </span>
+        <span class="badge">
+          <i class="bi bi-graph-up"></i>
+          Detailed Analysis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="tool-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="input-card">
+        <h3 class="input-title">
+          <i class="bi bi-sliders"></i>
+          Loan Parameters
+        </h3>
+        
+        <form class="emi-form">
+      <!-- Loan Amount -->
+          <div class="input-group">
+            <label for="loanAmount" class="input-label">
+              <i class="bi bi-currency-rupee"></i>
+              Loan Amount
+            </label>
+            <div class="input-wrapper">
+              <span class="currency-symbol">₹</span>
+        <input 
+                id="loanAmount"
+          [(ngModel)]="loanAmount"
+          name="loanAmount"
+          (change)="calculateEMI()"
+                type="number" 
+                class="form-control amount-input" 
+                placeholder="Enter loan amount"
+                aria-describedby="loanAmountHelp">
+            </div>
+            <div class="quick-amounts">
+              <span class="quick-amount" (click)="setQuickAmount(500000)">₹5L</span>
+              <span class="quick-amount" (click)="setQuickAmount(1000000)">₹10L</span>
+              <span class="quick-amount" (click)="setQuickAmount(2000000)">₹20L</span>
+              <span class="quick-amount" (click)="setQuickAmount(5000000)">₹50L</span>
+              <span class="quick-amount" (click)="setQuickAmount(10000000)">₹1Cr</span>
+              <span class="quick-amount" (click)="setQuickAmount(20000000)">₹2Cr</span>
+              <span class="quick-amount" (click)="setQuickAmount(50000000)">₹5Cr</span>
+              <span class="quick-amount" (click)="setQuickAmount(100000000)">₹10Cr</span>
+            </div>
+            <div id="loanAmountHelp" class="input-help">Enter the principal loan amount you wish to borrow</div>
+      </div>
+
+      <!-- Interest Rate -->
+          <div class="input-group">
+            <label for="interestRate" class="input-label">
+              <i class="bi bi-percent"></i>
+              Interest Rate (% per annum)
+            </label>
+            <div class="slider-container">
+              <div class="slider-wrapper">
+        <input
+          type="range"
+          id="interestRate"
+                  class="form-range interest-slider"
+          [(ngModel)]="interestRate"
+          name="interestRate"
+          min="1"
+                  max="30"
+          step="0.01"
+          (change)="calculateEMI()"
+                  required>
+                <div class="slider-labels">
+                  <span>1%</span>
+                  <span>30%</span>
+                </div>
+              </div>
+              <div class="value-display">
+                <input 
+                  [(ngModel)]="interestRate"
+                  name="interestRate"
+                  (change)="calculateEMI()"
+                  type="number" 
+                  class="form-control value-input" 
+                  min="1"
+                  max="30"
+                  step="0.01">
+                <span class="unit">%</span>
+              </div>
+            </div>
+            <div id="interestRateHelp" class="input-help">Use the slider or input field to set the annual interest rate</div>
+      </div>
+
+      <!-- Loan Tenure -->
+          <div class="input-group">
+            <label for="loanTenure" class="input-label">
+              <i class="bi bi-calendar-range"></i>
+              Loan Tenure (Years)
+            </label>
+            <div class="slider-container">
+              <div class="slider-wrapper">
+        <input
+          type="range"
+          id="loanTenure"
+                  class="form-range tenure-slider"
+          [(ngModel)]="loanTenure"
+          name="loanTenure"
+          min="1"
+                  max="30"
+          step="1"
+          (change)="calculateEMI()"
+                  required>
+                <div class="slider-labels">
+                  <span>1 Year</span>
+                  <span>30 Years</span>
+                </div>
+              </div>
+              <div class="value-display">
+                <input 
+                  name="loanTenure"
+                  (change)="calculateEMI()"
+                  [(ngModel)]="loanTenure"
+                  type="number" 
+                  class="form-control value-input" 
+                  min="1"
+                  max="30"
+                  step="1">
+                <span class="unit">Years</span>
+              </div>
+            </div>
+            <div id="loanTenureHelp" class="input-help">Select the loan repayment period in years</div>
+          </div>
+
+          <!-- Calculate Button -->
+          <div class="action-section">
+            <button type="button" class="btn btn-primary btn-lg calculate-btn" (click)="calculateEMI()">
+              <i class="bi bi-calculator"></i>
+              <span>Calculate EMI</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-section" *ngIf="emi > 0">
+      <div class="results-card">
+        <div class="results-header">
+          <h3 class="results-title">
+            <i class="bi bi-graph-up"></i>
+            EMI Calculation Results
+          </h3>
+        </div>
+        
+        <div class="results-grid">
+          <!-- Monthly EMI -->
+          <div class="result-item primary">
+            <div class="result-icon">
+              <i class="bi bi-calendar-month"></i>
+            </div>
+            <div class="result-content">
+              <div class="result-label">Monthly EMI</div>
+              <div class="result-value">₹ {{ emi.toFixed(2) | indianCurrencyFormatter }}</div>
+            </div>
+          </div>
+
+          <!-- Total Interest -->
+          <div class="result-item secondary">
+            <div class="result-icon">
+              <i class="bi bi-percent"></i>
+            </div>
+            <div class="result-content">
+              <div class="result-label">Total Interest</div>
+              <div class="result-value">₹ {{ totalInterest.toFixed(2) | indianCurrencyFormatter }}</div>
+            </div>
+          </div>
+
+          <!-- Total Payment -->
+          <div class="result-item accent">
+            <div class="result-icon">
+              <i class="bi bi-cash-stack"></i>
+            </div>
+            <div class="result-content">
+              <div class="result-label">Total Payment</div>
+              <div class="result-value">₹ {{ (totalPrincipal + totalInterest).toFixed(2) | indianCurrencyFormatter }}</div>
+            </div>
+          </div>
+
+          <!-- Principal Amount -->
+          <div class="result-item info">
+            <div class="result-icon">
+              <i class="bi bi-bank"></i>
+            </div>
+            <div class="result-content">
+              <div class="result-label">Principal Amount</div>
+              <div class="result-value">₹ {{ totalPrincipal.toFixed(2) | indianCurrencyFormatter }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loan Summary -->
+        <div class="loan-summary">
+          <h4 class="summary-title">
+            <i class="bi bi-info-circle"></i>
+            Loan Summary
+          </h4>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <div class="summary-label">Principal Amount</div>
+              <div class="summary-value">₹ {{ totalPrincipal.toFixed(2) | indianCurrencyFormatter }}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Interest Rate</div>
+              <div class="summary-value">{{ interestRate }}% per annum</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Loan Tenure</div>
+              <div class="summary-value">{{ loanTenure }} years ({{ loanTenure * 12 }} months)</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Interest Amount</div>
+              <div class="summary-value">₹ {{ totalInterest.toFixed(2) | indianCurrencyFormatter }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Summary -->
+        <div class="summary-section">
+          <h4 class="summary-title">
+            <i class="bi bi-graph-up"></i>
+            Payment Summary
+          </h4>
+          <div class="summary-content">
+            <p>You will pay <strong>₹ {{ totalInterest.toFixed(2) | indianCurrencyFormatter }}</strong> in interest over <strong>{{ loanTenure }} years</strong>.</p>
+            <p>Your monthly payment of <strong>₹ {{ emi.toFixed(2) | indianCurrencyFormatter }}</strong> will remain constant throughout the loan term.</p>
+            <div class="interest-ratio">
+              <div class="ratio-bar">
+                <div class="ratio-fill" [style.width.%]="(totalInterest / (totalPrincipal + totalInterest)) * 100"></div>
+              </div>
+              <div class="ratio-text">
+                <span>Principal: {{ ((totalPrincipal / (totalPrincipal + totalInterest)) * 100).toFixed(1) }}%</span>
+                <span>Interest: {{ ((totalInterest / (totalPrincipal + totalInterest)) * 100).toFixed(1) }}%</span>
+              </div>
+            </div>
+            
+            <!-- Sector Chart -->
+            <div class="sector-chart-container">
+              <h5 class="chart-title">
+                <i class="bi bi-pie-chart"></i>
+                Payment Breakdown
+              </h5>
+              <div class="sector-chart">
+                <div class="chart-wrapper">
+                  <svg class="pie-chart" viewBox="0 0 200 200">
+                    <!-- Principal Sector -->
+                    <circle
+                      class="sector principal-sector"
+                      cx="100"
+                      cy="100"
+                      r="80"
+                      fill="none"
+                      stroke="url(#principalGradient)"
+                      stroke-width="40"
+                      stroke-dasharray="0 502.4"
+                      [attr.stroke-dasharray]="getPrincipalDashArray()"
+                      stroke-dashoffset="0"
+                      transform="rotate(-90 100 100)">
+                    </circle>
+                    <!-- Interest Sector -->
+                    <circle
+                      class="sector interest-sector"
+                      cx="100"
+                      cy="100"
+                      r="80"
+                      fill="none"
+                      stroke="url(#interestGradient)"
+                      stroke-width="40"
+                      stroke-dasharray="0 502.4"
+                      [attr.stroke-dasharray]="getInterestDashArray()"
+                      [attr.stroke-dashoffset]="getInterestDashOffset()"
+                      transform="rotate(-90 100 100)">
+                    </circle>
+                    <!-- Center Text -->
+                    <text x="100" y="100" text-anchor="middle" class="chart-center-text">
+                      <tspan x="100" dy="-10" class="chart-center-label">Total Payment</tspan>
+                      <tspan x="100" dy="20" class="chart-center-value">₹ {{ (totalPrincipal + totalInterest).toFixed(0) | indianCurrencyFormatter }}</tspan>
+                    </text>
+                    <!-- Gradients -->
+                    <defs>
+                      <linearGradient id="principalGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:var(--primary-hover);stop-opacity:1" />
+                      </linearGradient>
+                      <linearGradient id="interestGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:var(--accent-color);stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:var(--accent-hover);stop-opacity:1" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <div class="legend-color principal-color"></div>
+                    <div class="legend-text">
+                      <div class="legend-label">Principal Amount</div>
+                      <div class="legend-value">₹ {{ totalPrincipal.toFixed(2) | indianCurrencyFormatter }}</div>
+                      <div class="legend-percentage">{{ ((totalPrincipal / (totalPrincipal + totalInterest)) * 100).toFixed(1) }}%</div>
+                    </div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color interest-color"></div>
+                    <div class="legend-text">
+                      <div class="legend-label">Interest Amount</div>
+                      <div class="legend-value">₹ {{ totalInterest.toFixed(2) | indianCurrencyFormatter }}</div>
+                      <div class="legend-percentage">{{ ((totalInterest / (totalPrincipal + totalInterest)) * 100).toFixed(1) }}%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

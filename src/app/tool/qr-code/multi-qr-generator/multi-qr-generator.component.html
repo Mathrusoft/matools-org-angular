@@ -1,0 +1,99 @@
+<div class="container mt-2">
+  <h3 class="text-center">Generate QR Code</h3>
+  <div class="row ">
+    <div class="row col-md-10 text-start mt-4 mx-auto "> 
+      <div class="mb-3">
+          <label for="inputString" class="form-label">Enter Text to Generate QR-Code</label>
+          <textarea [(ngModel)]="inputTextValue" class="form-control" id="inputString" placeholder="Add Text here to Generate Multiple QR Codes. Each line will be generated as one QR code" rows="10"></textarea>
+        </div>
+      <div class="mt-1 row align-items-left">
+          <div class="mt-1 d-flex align-items-center">
+            <label for="colorPicker" class="me-2">Dark Color:</label>
+            <input type="color" [(ngModel)]="colorDark" class="form-control form-control-color" id="colorPicker" value="#563d7c" title="Choose your color">
+          </div>
+
+          <div class="mt-1 d-flex align-items-center">
+            <label for="colorPicker" class="me-2">Light Color:</label>
+            <input type="color" [(ngModel)]="colorLight" class="form-control form-control-color" id="colorPicker" value="#563d7c" title="Choose your color">
+          </div>
+
+          <div class="mt-2 d-flex align-items-center">
+            <input type="checkbox" [(ngModel)]="showBottomQrCodeValue" id="showQrValue">
+            <label for="showQrValue" class="ms-2">Show QR Code Value at bottom</label>
+          </div>
+          <div class="mt-4 d-flex align-items-center">
+            <label for="counter" class="me-2 fw-bold">Initial Counter Number:</label>
+            
+            <input 
+              type="number" 
+              [(ngModel)]="counter" 
+              id="counter" 
+              class="form-control w-25" 
+              placeholder="Enter count"
+              min="0">
+          </div>
+          <div class="row col-md-4">
+            <button (click)="generateQRCodes()" class="btn btn-primary mt-3">Generate Codes</button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  @if (error) {
+    <p>{{error}}</p>
+  }
+
+  <div  id="qrCodeContainer" class="row col-md-4 text-center mt-4 mx-auto "> 
+    <br>
+    <br>
+    <div class="container pr-5 pl-5 mt-5"  id="rentReceipt">
+
+      <ul *ngIf="qrCodeArray.length > 0">
+        <button (click)="downloadPDF()" class="btn btn-primary mt-3">Download QR Codes as PDF</button>
+
+        <li *ngFor="let line of qrCodeArray; let i = index">
+          <div class="qrCodeItem mt-3">
+            <h3 class="qrTitle">MatLead</h3>
+            <img src="matlead_icon.png" alt="QR Image" class="qrImage">
+            
+
+            <div class="qrWrapper mt-2">
+              <qrcode [qrdata]="line" [width]="width" 
+                      [colorDark]="colorDarkForQRCode"
+                      [colorLight]="colorLightForQRCode"  
+                      [errorCorrectionLevel]="'M'">
+              </qrcode>
+            </div>
+            @if (showBottomQrCodeValue) {
+              <small class="qrValue">{{i+counter}} {{ line }}</small>
+            }
+            @if (!showBottomQrCodeValue) {
+              <small class="qrValue">{{i+counter}}</small>
+            }
+          </div>
+          
+
+        </li>
+      </ul>
+      </div>
+  </div>
+
+
+  <div class="alert alert-info mt-3" role="alert">
+
+    <strong>Disclaimer:</strong>
+    <p>
+        This QR code generator is a client-side tool. All data you input is processed locally on your device, 
+        ensuring your privacy and data security. We do not store or share any of the content you generate.
+    </p>
+    <p>
+        However, we may collect anonymized usage data for analytics purposes to improve user experience. 
+        By using this tool, you agree to these terms.
+    </p>
+  </div>
+
+
+</div>
+
+
+

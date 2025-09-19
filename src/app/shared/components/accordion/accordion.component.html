@@ -1,0 +1,27 @@
+<div class="accordion-container">
+  <div class="accordion" [id]="'accordion-' + Math.random().toString(36).substr(2, 9)">
+    <div class="accordion-item" *ngFor="let item of items; trackBy: trackByItemId">
+      <h2 class="accordion-header" [id]="'heading-' + item.id">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!item.isOpen"
+          type="button" 
+          (click)="toggleItem(item.id)"
+          [attr.aria-expanded]="item.isOpen"
+          [attr.aria-controls]="'collapse-' + item.id">
+          {{ item.title }}
+        </button>
+      </h2>
+      <div 
+        [id]="'collapse-' + item.id" 
+        class="accordion-collapse" 
+        [class.collapse]="!item.isOpen"
+        [class.show]="item.isOpen"
+        [attr.aria-labelledby]="'heading-' + item.id">
+        <div class="accordion-body" [innerHTML]="item.content">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

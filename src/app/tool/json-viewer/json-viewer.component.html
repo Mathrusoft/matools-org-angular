@@ -1,0 +1,209 @@
+<div class="tool-container">
+  <!-- Header Section -->
+  <div class="tool-header">
+    <div class="header-content">
+      <h1 class="tool-title">
+        <i class="bi bi-code-square"></i>
+        JSON Viewer & Formatter
+      </h1>
+      <p class="tool-description">View, format, validate, and analyze JSON data with syntax highlighting and real-time preview</p>
+      <div class="feature-badges">
+        <span class="badge">
+          <i class="bi bi-check-circle"></i>
+          JSON Validation
+        </span>
+        <span class="badge">
+          <i class="bi bi-palette"></i>
+          Syntax Highlighting
+        </span>
+        <span class="badge">
+          <i class="bi bi-eye"></i>
+          Live Preview
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="tool-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="input-card">
+        <div class="input-header">
+          <h3 class="input-title">
+            <i class="bi bi-pencil-square"></i>
+            JSON Input
+          </h3>
+          <div class="input-actions">
+            <button class="btn btn-outline-secondary btn-sm" (click)="loadSample()">
+              <i class="bi bi-file-earmark-text"></i>
+              Load Sample
+            </button>
+            <button class="btn btn-outline-primary btn-sm" (click)="copyInputJson()">
+              <i class="bi bi-clipboard"></i>
+              Copy Input
+            </button>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <textarea 
+            id="inputJson"
+            [(ngModel)]="inputJson"
+            (input)="onInputChange()"
+            class="form-control json-input" 
+            rows="12" 
+            placeholder="Enter your JSON data here...&#10;Example:&#10;{&#10;  &quot;name&quot;: &quot;John Doe&quot;,&#10;  &quot;age&quot;: 30,&#10;  &quot;address&quot;: {&#10;    &quot;city&quot;: &quot;New York&quot;,&#10;    &quot;zip&quot;: &quot;10001&quot;&#10;  }&#10;}">
+          </textarea>
+          
+          <!-- Error Message -->
+          <div class="error-message" *ngIf="!isValidJson && errorMessage">
+            <i class="bi bi-exclamation-triangle"></i>
+            {{ errorMessage }}
+          </div>
+          
+          <!-- Success Message -->
+          <div class="success-message" *ngIf="isValidJson && showPreview">
+            <i class="bi bi-check-circle"></i>
+            Valid JSON - Ready for formatting
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Options Section -->
+    <div class="options-section" *ngIf="isValidJson && showPreview">
+      <div class="options-card">
+        <h3 class="options-title">
+          <i class="bi bi-sliders"></i>
+          Formatting Options
+        </h3>
+        
+        <div class="options-grid">
+          <!-- Indent Size -->
+          <div class="option-group">
+            <label class="option-label">Indent Size</label>
+            <div class="indent-controls">
+              <input 
+                type="range" 
+                min="1" 
+                max="8" 
+                [(ngModel)]="indentSize"
+                (change)="onIndentSizeChange()"
+                class="indent-slider">
+              <span class="indent-value">{{ indentSize }} spaces</span>
+            </div>
+          </div>
+
+          <!-- Format Options -->
+          <div class="option-group">
+            <label class="option-label">Format Options</label>
+            <div class="format-buttons">
+              <button 
+                class="btn btn-outline-primary btn-sm" 
+                (click)="beautifyJson()"
+                [class.active]="!showMinified">
+                <i class="bi bi-code"></i>
+                Beautify
+              </button>
+              <button 
+                class="btn btn-outline-secondary btn-sm" 
+                (click)="minifyJson()"
+                [class.active]="showMinified">
+                <i class="bi bi-arrow-down-up"></i>
+                Minify
+              </button>
+            </div>
+          </div>
+
+          <!-- Additional Options -->
+          <div class="option-group">
+            <label class="option-label">Display Options</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input 
+                  type="checkbox" 
+                  id="showLineNumbers"
+                  [(ngModel)]="showLineNumbers">
+                <label for="showLineNumbers">Show Line Numbers</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-section" *ngIf="showPreview && isValidJson">
+      <div class="preview-card">
+        <div class="preview-header">
+          <h3 class="preview-title">
+            <i class="bi bi-eye"></i>
+            Formatted JSON Preview
+          </h3>
+          <div class="preview-actions">
+            <button class="btn btn-outline-primary btn-sm" (click)="copyFormattedJson()">
+              <i class="bi bi-clipboard"></i>
+              Copy Formatted
+            </button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="clearAll()">
+              <i class="bi bi-trash"></i>
+              Clear All
+            </button>
+          </div>
+        </div>
+        
+        <div class="preview-content">
+          <!-- JSON Stats -->
+          <div class="json-stats" *ngIf="getJsonStats()">
+            <div class="stat-item">
+              <i class="bi bi-hash"></i>
+              {{ getJsonStats()?.characters }} characters
+            </div>
+            <div class="stat-item">
+              <i class="bi bi-list-ul"></i>
+              {{ getJsonStats()?.lines }} lines
+            </div>
+            <div class="stat-item">
+              <i class="bi bi-collection"></i>
+              {{ getJsonStats()?.objects }} objects
+            </div>
+            <div class="stat-item">
+              <i class="bi bi-list"></i>
+              {{ getJsonStats()?.arrays }} arrays
+            </div>
+            <div class="stat-item">
+              <i class="bi bi-tag"></i>
+              {{ getJsonStats()?.properties }} properties
+            </div>
+          </div>
+          
+          <!-- Formatted JSON Output -->
+          <div class="json-output">
+            <div class="json-editor" [class.with-line-numbers]="showLineNumbers">
+              <div class="line-numbers" *ngIf="showLineNumbers">
+                <div *ngFor="let line of formattedJson.split('\n'); let i = index" class="line-number">
+                  {{ i + 1 }}
+                </div>
+              </div>
+              <pre class="json-content"><code [innerHTML]="getHighlightedJson()"></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!showPreview && !inputJson.trim()">
+      <div class="empty-content">
+        <i class="bi bi-code-square empty-icon"></i>
+        <h4>Ready to Format JSON!</h4>
+        <p>Enter your JSON data above to see the formatted preview with syntax highlighting.</p>
+        <button class="btn btn-primary" (click)="loadSample()">
+          <i class="bi bi-file-earmark-text"></i>
+          Try Sample Data
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

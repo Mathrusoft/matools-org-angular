@@ -1,0 +1,58 @@
+<div class="uuid-generator-container">
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="header-content">
+      <h1 class="main-title">
+        <i class="bi bi-hash"></i>
+        Online UUID Generator
+      </h1>
+      <p class="main-description">Generate UUIDs in multiple versions (V1, V4, V6, V7) with different characteristics and use cases</p>
+    </div>
+  </div>
+
+  <!-- Version Tabs -->
+  <div class="tabs-container">
+    <ul class="nav nav-tabs modern-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link tab-button" id="v1-tab" data-bs-toggle="tab" data-bs-target="#v1" type="button" role="tab" aria-controls="v1" aria-selected="true">
+          <span class="tab-text">Version V1</span>
+          <span class="tab-description">Time-based</span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link tab-button" id="v4-tab" data-bs-toggle="tab" data-bs-target="#v4" type="button" role="tab" aria-controls="v4" aria-selected="false">
+          <span class="tab-text">Version V4</span>
+          <span class="tab-description">Random</span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link tab-button" id="v6-tab" data-bs-toggle="tab" data-bs-target="#v6" type="button" role="tab" aria-controls="v6" aria-selected="false">
+          <span class="tab-text">Version V6</span>
+          <span class="tab-description">Time-ordered</span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link tab-button" id="v7-tab" data-bs-toggle="tab" data-bs-target="#v7" type="button" role="tab" aria-controls="v7" aria-selected="false">
+          <span class="tab-text">Version V7</span>
+          <span class="tab-description">Time-ordered</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content modern-tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="v1" role="tabpanel" aria-labelledby="v1-tab">
+      <app-generate-uuid [(inputUUIDData)]="v1uuid"/>
+    </div>
+    <div class="tab-pane fade" id="v4" role="tabpanel" aria-labelledby="v4-tab">
+      <app-generate-uuid [(inputUUIDData)]="v4uuid"/>
+    </div>
+    <div class="tab-pane fade" id="v6" role="tabpanel" aria-labelledby="v6-tab">
+      <app-generate-uuid [(inputUUIDData)]="v6uuid"/>
+    </div>
+    <div class="tab-pane fade" id="v7" role="tabpanel" aria-labelledby="v7-tab">
+      <app-generate-uuid [(inputUUIDData)]="v7uuid"/>
+    </div>
+  </div>
+</div>

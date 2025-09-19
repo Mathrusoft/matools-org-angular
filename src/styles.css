@@ -1,0 +1,732 @@
+/* Modern Theme for maTools - Global Styles */
+
+/* CRITICAL: Force light theme - Override any dark themes */
+html {
+  background-color: #f8fafc !important;
+}
+
+body {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+/* CSS Custom Properties for consistent theming */
+:root {
+  /* Primary Colors */
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #dbeafe;
+  --primary-dark: #1e40af;
+  
+  /* Secondary Colors */
+  --secondary-color: #64748b;
+  --secondary-hover: #475569;
+  --secondary-light: #f1f5f9;
+  
+  /* Accent Colors */
+  --accent-color: #06b6d4;
+  --accent-hover: #0891b2;
+  --accent-light: #cffafe;
+  
+  /* Success, Warning, Error */
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  
+  /* Neutral Colors */
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  
+  /* Typography */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+}
+
+/* Light theme only - no dark mode */
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-primary) !important;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--gray-800) !important;
+  background-color: var(--gray-50) !important;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure light theme is applied */
+html {
+  background-color: var(--gray-50) !important;
+}
+
+/* Override any dark theme that might be applied */
+* {
+  color: inherit;
+}
+
+/* Force light backgrounds - Override Bootstrap and any dark themes */
+.container, .card, .navbar, .offcanvas, .modal, .dropdown-menu, .list-group-item {
+  background-color: var(--white) !important;
+  color: var(--gray-800) !important;
+}
+
+/* Override Bootstrap dark classes */
+.bg-dark, .bg-primary, .bg-secondary, .bg-success, .bg-danger, .bg-warning, .bg-info {
+  background-color: var(--white) !important;
+  color: var(--gray-800) !important;
+}
+
+/* Override text color classes */
+.text-dark, .text-primary, .text-secondary, .text-success, .text-danger, .text-warning, .text-info {
+  color: var(--gray-800) !important;
+}
+
+/* Ensure form elements are visible */
+.form-control, .form-select, .form-check-input {
+  background-color: var(--white) !important;
+  color: var(--gray-800) !important;
+  border-color: var(--gray-300) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 var(--space-4) 0;
+  color: var(--gray-900) !important;
+}
+
+/* Ensure all text elements are visible */
+p, span, div, a, label, input, textarea, select {
+  color: var(--gray-800) !important;
+}
+
+/* Button text color overrides */
+button, .btn {
+  color: inherit !important;
+}
+
+.btn-primary, .btn-primary * {
+  color: var(--white) !important;
+}
+
+.btn-secondary, .btn-secondary * {
+  color: var(--white) !important;
+}
+
+/* Specific overrides for tool buttons */
+.process-btn, .process-btn * {
+  color: var(--white) !important;
+}
+
+.menu-toggle-btn, .menu-toggle-btn * {
+  color: var(--white) !important;
+}
+
+/* Override any Bootstrap button text color */
+.btn-primary span, .btn-primary i {
+  color: var(--white) !important;
+}
+
+/* Donate button specific overrides */
+.donate-btn, .donate-btn *, .donate-btn i, .donate-btn span {
+  color: var(--white) !important;
+}
+
+.donate-btn:hover, .donate-btn:hover *, .donate-btn:hover i, .donate-btn:hover span {
+  color: var(--white) !important;
+}
+
+/* Company info section overrides */
+.company-info h4, .company-info h4 * {
+  color: var(--white) !important;
+}
+
+.company-info p, .company-info p * {
+  color: var(--gray-300) !important;
+}
+
+/* Privacy notice section overrides */
+.privacy-notice h4, .privacy-notice h4 * {
+  color: var(--white) !important;
+}
+
+.privacy-notice p, .privacy-notice p * {
+  color: var(--gray-200) !important;
+}
+
+.privacy-notice a, .privacy-notice a * {
+  color: var(--accent-color) !important;
+}
+
+.privacy-notice a:hover, .privacy-notice a:hover * {
+  color: var(--white) !important;
+}
+
+/* Copyright section overrides */
+.copyright, .copyright *, .copyright span, .copyright i {
+  color: var(--gray-300) !important;
+}
+
+.copyright i {
+  color: var(--accent-color) !important;
+}
+
+/* Force light backgrounds for all major elements */
+main, section, article, aside, nav, header, footer {
+  background-color: transparent !important;
+  color: var(--gray-800) !important;
+}
+
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl); }
+h5 { font-size: var(--text-lg); }
+h6 { font-size: var(--text-base); }
+
+p {
+  margin: 0 0 var(--space-4) 0;
+  color: var(--gray-700);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Code styling */
+code {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+  background-color: var(--gray-100);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--gray-800);
+}
+
+pre {
+  font-family: var(--font-family-mono);
+  background-color: var(--gray-100);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: var(--space-4) 0;
+}
+
+/* Button improvements */
+.btn {
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  color: var(--white) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover) !important;
+  color: var(--white) !important;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.btn-primary:focus {
+  background-color: var(--primary-color) !important;
+  color: var(--white) !important;
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.btn-primary:active {
+  background-color: var(--primary-color) !important;
+  color: var(--white) !important;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-hover);
+  color: var(--white);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.btn-lg {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-lg);
+}
+
+/* Form improvements */
+.form-control {
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: var(--text-base);
+  transition: all var(--transition-fast);
+  background-color: var(--white);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+  outline: none;
+}
+
+.form-check-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--gray-300);
+  transition: all var(--transition-fast);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--white);
+  position: relative;
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.form-check-input:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white) !important;
+  font-weight: bold;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.form-check-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+  outline: none;
+}
+
+.form-check-input:hover {
+  border-color: var(--primary-color);
+}
+
+/* Ensure checkbox is visible in option items */
+.option-item .form-check-input {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.option-item .form-check-input:checked {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.form-check-label {
+  margin-left: var(--space-2);
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+/* Card improvements */
+.card {
+  border: none;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  background-color: var(--white);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Navbar improvements */
+.navbar, .navbar-light, .navbar-expand-lg {
+  background-color: var(--white) !important;
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--gray-200);
+  color: var(--gray-800) !important;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: var(--text-xl);
+  color: var(--gray-900) !important;
+  text-decoration: none;
+}
+
+.navbar-brand:hover {
+  color: var(--primary-color) !important;
+}
+
+/* Offcanvas improvements */
+.offcanvas {
+  background-color: var(--white);
+  border-right: 1px solid var(--gray-200);
+}
+
+.offcanvas-header {
+  border-bottom: 1px solid var(--gray-200);
+  background-color: var(--gray-50);
+}
+
+.offcanvas-title {
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.list-group-item {
+  border: none;
+  padding: var(--space-4);
+  color: var(--gray-700);
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md) !important;
+  margin-bottom: var(--space-1);
+}
+
+.list-group-item:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  transform: translateX(4px);
+}
+
+.list-group-item i {
+  margin-right: var(--space-3);
+  width: 1.25rem;
+  text-align: center;
+}
+
+/* Accordion improvements */
+.accordion-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  width: 100%;
+}
+
+.accordion-item {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl) !important;
+  margin: var(--space-8) 0 var(--space-4) 0;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  background: var(--white);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.accordion-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color));
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.accordion-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.accordion-item:hover::before {
+  opacity: 1;
+}
+
+/* Force accordion items to respect container width */
+.accordion-container .accordion-item {
+  max-width: 1000px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
+
+/* Override Bootstrap accordion classes */
+.accordion {
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+}
+
+/* Ensure accordion doesn't take full viewport width */
+.accordion-item[_ngcontent-ng-c684475212] {
+  max-width: 1000px !important;
+  margin: 0 auto var(--space-4) auto !important;
+  width: 100% !important;
+}
+
+/* Additional override for any accordion items */
+div.accordion-item {
+  max-width: 1000px !important;
+  margin: var(--space-8) auto var(--space-4) auto !important;
+  width: 100% !important;
+}
+
+/* Force container width on the tool component */
+.tool-container + .accordion-container {
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
+/* Nuclear option - force all accordion items to max width */
+*[class*="accordion-item"] {
+  max-width: 1000px !important;
+  margin: var(--space-8) auto var(--space-4) auto !important;
+  width: 100% !important;
+}
+
+/* Target the specific component structure */
+app-word-count .accordion-container .accordion-item {
+  max-width: 1000px !important;
+  margin: var(--space-8) auto var(--space-4) auto !important;
+  width: 100% !important;
+}
+
+.accordion-button {
+  background: linear-gradient(135deg, var(--gray-50), var(--white));
+  border: none;
+  font-weight: 600;
+  color: var(--gray-800);
+  padding: var(--space-5) var(--space-6);
+  transition: all var(--transition-normal);
+  position: relative;
+  font-size: var(--text-lg);
+  border-radius: 0;
+}
+
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23374151'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  transition: all var(--transition-normal);
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+}
+
+.accordion-button:not(.collapsed) {
+  background: linear-gradient(135deg, var(--primary-light), var(--white));
+  color: var(--primary-color);
+  box-shadow: none;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.accordion-button:not(.collapsed)::after {
+  transform: rotate(180deg);
+  filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(7500%) hue-rotate(200deg) brightness(101%) contrast(101%);
+}
+
+.accordion-button:hover {
+  background: linear-gradient(135deg, var(--primary-light), var(--white));
+  color: var(--primary-color);
+  transform: none;
+}
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 3px var(--primary-light);
+  border-color: var(--primary-color);
+}
+
+.accordion-button:not(.collapsed):focus {
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.accordion-body {
+  padding: var(--space-6) var(--space-6) var(--space-8) var(--space-6);
+  background: linear-gradient(135deg, var(--white), var(--gray-50));
+  border-top: 1px solid var(--gray-200);
+  position: relative;
+}
+
+.accordion-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--space-6);
+  right: var(--space-6);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  opacity: 0.3;
+}
+
+/* Container improvements */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* Utility classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5); }
+
+.p-1 { padding: var(--space-1); }
+.p-2 { padding: var(--space-2); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+.p-5 { padding: var(--space-5); }
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-left {
+  animation: slideInLeft var(--transition-normal) ease-out;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-3);
+  }
+  
+  h1 { font-size: var(--text-3xl); }
+  h2 { font-size: var(--text-2xl); }
+  h3 { font-size: var(--text-xl); }
+  
+  .btn-lg {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-base);
+  }
+  
+  .accordion-container {
+    padding: 0 var(--space-2);
+    max-width: 100%;
+  }
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}

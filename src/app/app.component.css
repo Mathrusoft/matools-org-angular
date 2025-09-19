@@ -1,0 +1,30 @@
+/* App Component Styles */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--gray-50) !important;
+  color: var(--gray-800) !important;
+}
+
+.content-wrapper {
+  flex: 1;
+  padding: var(--space-6) 0;
+  min-height: calc(100vh - 200px);
+}
+
+/* Ensure smooth transitions between routes */
+router-outlet + * {
+  animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}

@@ -1,0 +1,549 @@
+<div class="tool-container">
+  <!-- Header Section -->
+  <div class="tool-header">
+    <div class="header-content">
+      <h1 class="tool-title">
+        <i class="bi bi-arrow-left-right"></i>
+        List Compare
+      </h1>
+      <p class="tool-description">Compare two lists and find differences, similarities, and relationships between them</p>
+      <div class="feature-badges">
+        <span class="badge">
+          <i class="bi bi-search"></i>
+          Find Differences
+        </span>
+        <span class="badge">
+          <i class="bi bi-arrow-left-right"></i>
+          Compare Lists
+        </span>
+        <span class="badge">
+          <i class="bi bi-gear"></i>
+          Advanced Options
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="tool-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="input-grid">
+        <!-- List A -->
+        <div class="input-card">
+          <div class="input-header">
+            <h3 class="input-title">
+              <i class="bi bi-list-ul"></i>
+              List A
+            </h3>
+          </div>
+          <div class="input-group">
+            <label for="titleA" class="input-label">
+              <i class="bi bi-tag"></i>
+              List Name
+            </label>
+            <input 
+              type="text" 
+              id="titleA" 
+              class="form-control title-input" 
+              [(ngModel)]="titleA" 
+              placeholder="Enter list name (e.g., Fruits)"
+              required>
+          </div>
+          <div class="input-group">
+            <label for="listA" class="input-label">
+              <i class="bi bi-list-ul"></i>
+              Items (one per line)
+            </label>
+            <textarea 
+              id="listA" 
+              class="form-control list-input" 
+              rows="8" 
+              [(ngModel)]="listA" 
+              placeholder="Enter your items here, one per line...
+Example:
+Apple
+Banana
+Cherry
+Date">
+            </textarea>
+            <div class="input-help">Enter each item on a new line</div>
+          </div>
+        </div>
+
+        <!-- List B -->
+        <div class="input-card">
+          <div class="input-header">
+            <h3 class="input-title">
+              <i class="bi bi-list-ul"></i>
+              List B
+            </h3>
+          </div>
+          <div class="input-group">
+            <label for="titleB" class="input-label">
+              <i class="bi bi-tag"></i>
+              List Name
+            </label>
+            <input 
+              type="text" 
+              id="titleB" 
+              class="form-control title-input" 
+              [(ngModel)]="titleB" 
+              placeholder="Enter list name (e.g., Vegetables)"
+              required>
+          </div>
+          <div class="input-group">
+            <label for="listB" class="input-label">
+              <i class="bi bi-list-ul"></i>
+              Items (one per line)
+            </label>
+            <textarea 
+              id="listB" 
+              class="form-control list-input" 
+              rows="8" 
+              [(ngModel)]="listB" 
+              placeholder="Enter your items here, one per line...
+Example:
+Carrot
+Broccoli
+Spinach
+Lettuce">
+            </textarea>
+            <div class="input-help">Enter each item on a new line</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Options Section -->
+    <div class="options-section">
+      <div class="options-card">
+        <h3 class="options-title">
+          <i class="bi bi-gear"></i>
+          Compare Options
+        </h3>
+        <div class="options-grid">
+          <div class="option-group">
+            <div class="checkbox-item">
+              <input 
+                type="checkbox" 
+                id="caseSensitive" 
+                class="form-check-input" 
+                (change)="onCompareClick()" 
+                [(ngModel)]="chekboxCaseSensitive">
+              <label for="caseSensitive" class="form-check-label">
+                <i class="bi bi-type"></i>
+                {{labelCaseSensitive}}
+              </label>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="checkbox-item">
+              <input 
+                type="checkbox" 
+                id="sort" 
+                class="form-check-input" 
+                (change)="onCompareClick()" 
+                [(ngModel)]="checkboxSort">
+              <label for="sort" class="form-check-label">
+                <i class="bi bi-sort-alpha-down"></i>
+                {{labelSort}}
+              </label>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="checkbox-item">
+              <input 
+                type="checkbox" 
+                id="removeDuplicates" 
+                class="form-check-input" 
+                (change)="onCompareClick()" 
+                [(ngModel)]="checkboxRemoveDuplicate">
+              <label for="removeDuplicates" class="form-check-label">
+                <i class="bi bi-x-circle"></i>
+                {{labelRemoveDuplicate}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="action-section">
+          <button class="btn btn-primary compare-btn" (click)="onCompareClick()">
+            <i class="bi bi-arrow-left-right"></i>
+            Compare Lists
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Section -->
+  <div [hidden]="isResultFound" class="results-section">
+  <div class="results-header">
+    <h3 class="results-title">
+      <i class="bi bi-graph-up"></i>
+      Comparison Results
+    </h3>
+    <div class="results-stats">
+      <span class="stat-item">
+        <i class="bi bi-list-ul"></i>
+        {{ getTotalItems() }} total items
+      </span>
+      <span class="stat-item">
+        <i class="bi bi-arrow-left-right"></i>
+        {{ getUniqueItems() }} unique items
+      </span>
+    </div>
+  </div>
+  
+  <div class="results-grid">
+    <!-- Only in List A -->
+    <div class="result-card">
+      <div class="result-header">
+        <h4 class="result-title">
+          <i class="bi bi-arrow-right-circle"></i>
+          Only in {{titleA || 'List A'}}
+        </h4>
+        <div class="result-count">{{ getItemCount(onlyInListA) }} items</div>
+      </div>
+      <div class="result-content">
+        <div class="textarea-container">
+          <textarea 
+            class="form-control result-textarea" 
+            rows="6" 
+            [(ngModel)]="onlyInListA"
+            readonly
+            placeholder="Items unique to List A will appear here...">
+          </textarea>
+          <button 
+            class="copy-btn" 
+            (click)="copyOnlyInListA()" 
+            title="Copy to clipboard"
+            [disabled]="!onlyInListA">
+            <i class="bi bi-clipboard"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Only in List B -->
+    <div class="result-card">
+      <div class="result-header">
+        <h4 class="result-title">
+          <i class="bi bi-arrow-left-circle"></i>
+          Only in {{titleB || 'List B'}}
+        </h4>
+        <div class="result-count">{{ getItemCount(onlyInListB) }} items</div>
+      </div>
+      <div class="result-content">
+        <div class="textarea-container">
+          <textarea 
+            class="form-control result-textarea" 
+            rows="6" 
+            [(ngModel)]="onlyInListB"
+            readonly
+            placeholder="Items unique to List B will appear here...">
+          </textarea>
+          <button 
+            class="copy-btn" 
+            (click)="copyOnlyInListB()" 
+            title="Copy to clipboard"
+            [disabled]="!onlyInListB">
+            <i class="bi bi-clipboard"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intersection (Common Items) -->
+    <div class="result-card">
+      <div class="result-header">
+        <h4 class="result-title">
+          <i class="bi bi-arrow-down-up"></i>
+          Common Items (Intersection)
+        </h4>
+        <div class="result-count">{{ getItemCount(onListAandB) }} items</div>
+      </div>
+      <div class="result-content">
+        <div class="textarea-container">
+          <textarea 
+            class="form-control result-textarea" 
+            rows="6" 
+            [(ngModel)]="onListAandB"
+            readonly
+            placeholder="Items common to both lists will appear here...">
+          </textarea>
+          <button 
+            class="copy-btn" 
+            (click)="copyCommonItems()" 
+            title="Copy to clipboard"
+            [disabled]="!onListAandB">
+            <i class="bi bi-clipboard"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Union (All Items) -->
+    <div class="result-card">
+      <div class="result-header">
+        <h4 class="result-title">
+          <i class="bi bi-collection"></i>
+          All Items (Union)
+        </h4>
+        <div class="result-count">{{ getItemCount(onListAorB) }} items</div>
+      </div>
+      <div class="result-content">
+        <div class="textarea-container">
+          <textarea 
+            class="form-control result-textarea" 
+            rows="6" 
+            [(ngModel)]="onListAorB"
+            readonly
+            placeholder="All unique items from both lists will appear here...">
+          </textarea>
+          <button 
+            class="copy-btn" 
+            (click)="copyAllItems()" 
+            title="Copy to clipboard"
+            [disabled]="!onListAorB">
+            <i class="bi bi-clipboard"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5 accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseOne"
+          type="button" 
+          (click)="toggleAccordion('collapseOne')"
+          [attr.aria-expanded]="accordionStates.collapseOne"
+          aria-controls="collapseOne">
+          How Tool works
+        </button>
+      </h2>
+      <div 
+        id="collapseOne" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseOne"
+        [class.show]="accordionStates.collapseOne"
+        aria-labelledby="headingOne">
+        <div class="accordion-body">
+          <p>We can break the comparison of two lists into four parts:</p>
+          <ol>
+              <li>
+                <h3>Items Only in ListA</h3>
+                <p>These are the elements that are present in <strong>ListA</strong> but not in <strong>ListB</strong>.</p>
+                <h3>Steps</h3>
+                <p>Subtract the elements of <strong>ListB</strong> from <strong>ListA</strong>.</p>
+                <h3>Example</h3>
+                <ul>
+                    <li><strong>ListA</strong>: <code>["apple", "banana", "mango"]</code></li>
+                    <li><strong>ListB</strong>: <code>["banana", "mango", "pineapple", "Grapes"]</code></li>
+                </ul>
+                <p><strong>Unique items in ListA:</strong> <code>["apple"]</code></p>
+              </li>
+              <li>
+                
+                <h3>Items Only in ListB</h3>
+                <p>These are the elements that are present in <strong>ListB</strong> but not in <strong>ListA</strong>.</p>
+
+                <h3>Steps</h3>
+                <p>Subtract the elements of <strong>ListA</strong> from <strong>ListB</strong>.</p>
+
+                <h3>Example</h3>
+                <p><strong>Unique items in ListB:</strong> <code>["pineapple", "Grapes"]</code></p>
+
+
+              </li>
+              <li>
+                <h3>Items in Both ListA and ListB</h3>
+                <p>These are the elements that exist in both <strong>ListA</strong> and <strong>ListB</strong> (intersection).</p>
+                
+                <h3>Steps</h3>
+                <p>Find the common elements in both lists.</p>
+                
+                <h3>Example</h3>
+                <p><strong>Common items:</strong> <code>["banana", "mango"]</code></p>                
+              </li>
+              <li>
+                <h3>Items in Either ListA or ListB</h3>
+                <p>These are the elements that exist in at least one of the lists (<strong>union</strong>).</p>
+
+                <h3>Steps</h3>
+                <p>Combine all unique elements from both lists.</p>
+
+                <h3>Example</h3>
+                <p><strong>Union of ListA and ListB:</strong> <code>["apple", "banana", "mango", "pineapple", "Grapes"]</code></p>        
+              </li>
+          </ol>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseTwo"
+          type="button" 
+          (click)="toggleAccordion('collapseTwo')"
+          [attr.aria-expanded]="accordionStates.collapseTwo"
+          aria-controls="collapseTwo">
+          How "{{labelCaseSensitive}}" works
+        </button>
+      </h2>
+      <div 
+        id="collapseTwo" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseTwo"
+        [class.show]="accordionStates.collapseTwo"
+        aria-labelledby="headingTwo">
+        <div class="accordion-body">
+
+          <h3>Input Data</h3>
+          <p><strong>ListA:</strong> <code>["Apple", "apple", "banana", "mango", "grapes", "apple"]</code></p>
+          <p><strong>ListB:</strong> <code>["banana", "mango", "Pineapple", "Grapes", "mango"]</code></p>
+
+          <h3>Items Only in ListA (Case Sensitive)</h3>
+          <p>These are the elements that are present in <strong>ListA</strong> but not in <strong>ListB</strong>, considering case sensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListA:</strong> <code>["Apple", "apple", "grapes", "apple"]</code></p>
+
+          <h3>Items Only in ListB (Case Sensitive)</h3>
+          <p>These are the elements that are present in <strong>ListB</strong> but not in <strong>ListA</strong>, considering case sensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListB:</strong> <code>["Pineapple", "Grapes"]</code></p>
+
+          <h3>Items in Both ListA and ListB (Intersection) (Case Sensitive)</h3>
+          <p>These are the elements that exist in both <strong>ListA</strong> and <strong>ListB</strong>, considering case sensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Common items:</strong> <code>["banana", "mango"]</code></p>
+
+          <h3>Items in Either ListA or ListB (Union) (Case Sensitive)</h3>
+          <p>These are the unique elements that exist in at least one of the lists, considering case sensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Union of ListA and ListB:</strong> <code>["Apple", "apple", "banana", "mango", "grapes", "Pineapple", "Grapes"]</code></p>
+
+
+          <h3>Items Only in ListA (Case Insensitive)</h3>
+          <p>These are the elements that are present in <strong>ListA</strong> but not in <strong>ListB</strong>, considering case insensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListA:</strong> <code>["apple", "apple", "apple"]</code></p>
+
+          <h3>Items Only in ListB (Case Insensitive)</h3>
+          <p>These are the elements that are present in <strong>ListB</strong> but not in <strong>ListA</strong>, considering case insensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListB:</strong> <code>["pineapple"]</code></p>
+
+          <h3>Items in Both ListA and ListB (Intersection) (Case Insensitive)</h3>
+          <p>These are the elements that exist in both <strong>ListA</strong> and <strong>ListB</strong>, considering case insensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Common items:</strong> <code>["banana", "mango", "grapes"]</code></p>
+
+          <h3>Items in Either ListA or ListB (Union) (Case Insensitive)</h3>
+          <p>These are the unique elements that exist in at least one of the lists, considering case insensitivity.</p>
+          <h3>Example</h3>
+          <p><strong>Union of ListA and ListB:</strong> <code>["apple", "banana", "mango", "grapes", "pineapple"]</code></p>
+
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseThree"
+          type="button" 
+          (click)="toggleAccordion('collapseThree')"
+          [attr.aria-expanded]="accordionStates.collapseThree"
+          aria-controls="collapseThree">
+          How "{{labelSort}}" works
+        </button>
+      </h2>
+      <div 
+        id="collapseThree" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseThree"
+        [class.show]="accordionStates.collapseThree"
+        aria-labelledby="headingThree">
+        <div class="accordion-body">
+          <h3>Input Data</h3>
+          <p><strong>ListA:</strong> <code>["Apple", "apple", "banana", "mango", "grapes", "apple"]</code></p>
+          <p><strong>ListB:</strong> <code>["banana", "mango", "Pineapple", "Grapes", "mango"]</code></p>
+          
+          <h3>Items Only in ListA (Case Sensitive and Sorted)</h3>
+          <p>These are the elements that are present in <strong>ListA</strong> but not in <strong>ListB</strong>, considering case insensitivity and sorted alphabetically.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListA:</strong> <code>["apple", "apple", "apple", "grapes"]</code></p>
+          
+          <h3>Items Only in ListB (Case Sensitive and Sorted)</h3>
+          <p>These are the elements that are present in <strong>ListB</strong> but not in <strong>ListA</strong>, considering case insensitivity and sorted alphabetically.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListB:</strong> <code>["Grapes", "Pineapple"]</code></p>
+          
+          <h3>Items in Both ListA and ListB (Intersection) (Case Sensitive and Sorted)</h3>
+          <p>These are the elements that exist in both <strong>ListA</strong> and <strong>ListB</strong>, considering case insensitivity and sorted alphabetically.</p>
+          <h3>Example</h3>
+          <p><strong>Common items:</strong> <code>["banana", "mango"]</code></p>
+          
+          <h3>Items in Either ListA or ListB (Union) (Case Sensitive and Sorted)</h3>
+          <p>These are the unique elements that exist in at least one of the lists, considering case insensitivity and sorted alphabetically.</p>
+          <h3>Example</h3>
+          <p><strong>Union of ListA and ListB:</strong> <code>["Apple", "apple", "banana", "grapes", "mango", "Pineapple", "Grapes"]</code></p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!accordionStates.collapseFour"
+          type="button" 
+          (click)="toggleAccordion('collapseFour')"
+          [attr.aria-expanded]="accordionStates.collapseFour"
+          aria-controls="collapseFour">
+          How "{{labelRemoveDuplicate}}" works
+        </button>
+      </h2>
+      <div 
+        id="collapseFour" 
+        class="accordion-collapse" 
+        [class.collapse]="!accordionStates.collapseFour"
+        [class.show]="accordionStates.collapseFour"
+        aria-labelledby="headingFour">
+        <div class="accordion-body">
+          <h3>Input Data</h3>
+          <p><strong>ListA:</strong> <code>["Apple", "apple", "banana", "mango", "grapes", "apple"]</code></p>
+          <p><strong>ListB:</strong> <code>["banana", "mango", "Pineapple", "Grapes", "mango"]</code></p>
+
+          <h3>Items Only in ListA (Case Sensitive and Remove Duplicates)</h3>
+          <p>These are the elements that are present in <strong>ListA</strong> but not in <strong>ListB</strong>, considering case insensitivity and with duplicates removed.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListA:</strong> <code>["Apple", "apple", "grapes"]</code></p>
+
+          <h3>Items Only in ListB (Case Sensitive and Remove Duplicates)</h3>
+          <p>These are the elements that are present in <strong>ListB</strong> but not in <strong>ListA</strong>, considering case insensitivity and with duplicates removed.</p>
+          <h3>Example</h3>
+          <p><strong>Unique items in ListB:</strong> <code>["Pineapple", "Grapes"]</code></p>
+
+          <h3>Items in Both ListA and ListB (Intersection) (Case Sensitive and Remove Duplicates)</h3>
+          <p>These are the elements that exist in both <strong>ListA</strong> and <strong>ListB</strong>, considering case insensitivity and with duplicates removed.</p>
+          <h3>Example</h3>
+          <p><strong>Common items:</strong> <code>["banana", "mango"]</code></p>
+
+          <h3>Items in Either ListA or ListB (Union) (Case Sensitive and Remove Duplicates)</h3>
+          <p>These are the unique elements that exist in at least one of the lists, considering case insensitivity and with duplicates removed.</p>
+          <h3>Example</h3>
+          <p><strong>Union of ListA and ListB:</strong> <code>["Apple", "apple", "banana", "mango", "grapes", "Pineapple", "Grapes"]</code></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
